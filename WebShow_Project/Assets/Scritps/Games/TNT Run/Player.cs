@@ -12,12 +12,14 @@ namespace GameMode_TntRun
             Physics,
         }
         //El salto ejecutara la animacion de salto y desactivara el boxCollider
+        public int numberPlayer;
         public float speed;
         public float speedJump;
         public bool stopMovementForCode;
         private float auxLinearDrag;
         public Rigidbody2D rigidbody2;
         public Animator animator;
+        //public InventoryPlayer inventoryPlayer;
         public TypeMovement typeMovement;
         [Header("Valor entre el 0 y el 1")]
         public float sensibilityController = 0.3f;
@@ -125,5 +127,22 @@ namespace GameMode_TntRun
                 rigidbody2.drag = auxLinearDrag;
             }
         }
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.tag == "Coin")
+            {
+                GameObject go = GameObject.Find("InventoryPlayer" + numberPlayer);
+                if (go != null)
+                {
+                    InventoryPlayer inventoryPlayer = go.GetComponent<InventoryPlayer>();
+                    if (inventoryPlayer != null)
+                    {
+                        inventoryPlayer.currentCoin++;
+                    }
+                }
+                Destroy(collider.gameObject);
+            }
+        }
     }
+    
 }
