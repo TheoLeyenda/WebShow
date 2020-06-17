@@ -59,7 +59,6 @@ public class TNT_Floor : MonoBehaviour
         CheckDelayDetonate();
     }
     // Update is called once per frame
-
     public void CheckAnimation()
     {
         for (int i = 0; i < animations.Count; i++)
@@ -98,7 +97,7 @@ public class TNT_Floor : MonoBehaviour
     {
         enableDelayDetonate = false;
     }
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.tag == "Player")
         {

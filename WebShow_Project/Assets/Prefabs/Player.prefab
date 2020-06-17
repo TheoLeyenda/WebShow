@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf35edae626ff6b45885816781cdf723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberPlayer: 0
   speed: 5
   speedJump: 10
   stopMovementForCode: 1
@@ -156,16 +157,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5052953}
+  m_Offset: {x: 0.00978905, y: -1.2189417}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 1.5}
+    oldSize: {x: 1, y: 3}
     newSize: {x: 0.08, y: 0.24}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.48940945}
+  m_Size: {x: 0.75451803, y: 0.58771706}
   m_EdgeRadius: 0
