@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     //public InventoryPlayer inventoryPlayer;
     public TypeMovement typeMovement;
     [Header("Valor entre el 0 y el 1")]
-    public float sensibilityController = 0.3f;
+    public float sensibilityController = 0.1f;
     void Start()
     {
         rigidbody2 = GetComponent<Rigidbody2D>();

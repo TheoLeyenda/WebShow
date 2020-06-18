@@ -65,8 +65,11 @@ public class TNTFloorManager : MonoBehaviour
         {
             int index = Random.Range(0, tnt_FloorList.Count);
 
-            tnt_FloorList[index].ActivatedDelayDetonate();
             TNT_Floor tnt_floor = tnt_FloorList[index];
+            if (tnt_floor.stateTNT == TNT_Floor.StateTNT.Normal)
+            {
+                tnt_FloorList[index].ActivatedTimerDetonate();
+            }
             tnt_FloorList.Remove(tnt_FloorList[index]);
             tnt_ExplotedList.Add(tnt_floor);
         }

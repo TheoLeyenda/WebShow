@@ -6,6 +6,7 @@ public class TNT_Floor : MonoBehaviour
 {
     // Start is called before the first frame update
     public float delayDetonate;
+    public float secondInDelayDetonate;
     private float auxDelayDetonate;
     private bool enableDelayDetonate;
     [System.Serializable]
@@ -17,10 +18,13 @@ public class TNT_Floor : MonoBehaviour
     public List<AnimationsData> animations;
     public Animator animator;
     public StateTNT stateTNT;
+    public float delayActivatedMeForCollision;
+    private float auxDelayActivatedMeForCollision;
     private bool isMortal;
     public enum StateTNT
     {
         Normal,
+        InTimerDetonate,
         DelayDetonate,
         Detonated,
         Empty,
@@ -48,7 +52,7 @@ public class TNT_Floor : MonoBehaviour
     void Start()
     {
         auxDelayDetonate = delayDetonate;
-
+        auxDelayActivatedMeForCollision = delayActivatedMeForCollision;
         //ActivatedDelayDetonate();
     }
 
@@ -69,6 +73,18 @@ public class TNT_Floor : MonoBehaviour
             }
         }
     }
+    public void CheckInDelayDetonateState()
+    {
+        if (delayDetonate <= secondInDelayDetonate)
+        {
+            ActivatedDelayDetonate();
+        }
+    }
+    public void ActivatedTimerDetonate()
+    {
+        stateTNT = StateTNT.InTimerDetonate;
+        enableDelayDetonate = true;
+    }
     public void Detonate()
     {
         stateTNT = StateTNT.Detonated;
@@ -82,7 +98,6 @@ public class TNT_Floor : MonoBehaviour
     public void ActivatedDelayDetonate()
     {
         stateTNT = StateTNT.DelayDetonate;
-        enableDelayDetonate = true;
     }
     public void DisableDelayDetonate()
     {
@@ -97,11 +112,23 @@ public class TNT_Floor : MonoBehaviour
     {
         enableDelayDetonate = false;
     }
+    public void CheckDelayActivatedMeForCollision()
+    {
+        if (delayActivatedMeForCollision > 0)
+        {
+            delayActivatedMeForCollision = delayActivatedMeForCollision - Time.deltaTime;
+        }
+        else
+        {
+            ActivatedTimerDetonate();
+        }
+    }
     private void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.tag == "Player")
         {
             Player p = collider.GetComponent<Player>();
+            CheckDelayActivatedMeForCollision();
             switch (stateTNT)
             {
                 case StateTNT.Empty:
@@ -112,5 +139,9 @@ public class TNT_Floor : MonoBehaviour
                     break;
             }
         }
+    }
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        delayActivatedMeForCollision = auxDelayActivatedMeForCollision;
     }
 }

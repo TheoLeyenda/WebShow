@@ -122,7 +122,7 @@ MonoBehaviour:
   rigidbody2: {fileID: 2786243851863900988}
   animator: {fileID: 2786243851863900985}
   typeMovement: 0
-  sensibilityController: 0.3
+  sensibilityController: 0.2
 --- !u!50 &2786243851863900988
 Rigidbody2D:
   serializedVersion: 4

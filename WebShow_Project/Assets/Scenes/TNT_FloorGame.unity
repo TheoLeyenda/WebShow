@@ -3479,6 +3479,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c6ac78cc8060ae4186f6cec2d387993, type: 3}
 --- !u!4 &838204013 stripped
@@ -7247,6 +7262,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3888674199787692387, guid: 8c6ac78cc8060ae4186f6cec2d387993,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c6ac78cc8060ae4186f6cec2d387993, type: 3}
 --- !u!4 &1643349127 stripped
@@ -9208,6 +9238,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TNT_FloorManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3504549520450504565, guid: e2a2e5e199c7f194ab960f86bddc1a4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3504549520450504555, guid: e2a2e5e199c7f194ab960f86bddc1a4d,
         type: 3}

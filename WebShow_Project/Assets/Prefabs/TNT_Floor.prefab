@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayDetonate: 3
+  secondInDelayDetonate: 1.366
   animations:
   - name: Idle
     nameIndex: Normal
@@ -151,8 +152,11 @@ MonoBehaviour:
     nameIndex: Detonated
   - name: Empty
     nameIndex: Empty
+  - name: InTimerDetonate
+    nameIndex: InTimerDetonate
   animator: {fileID: 3888674199787692385}
   stateTNT: 0
+  delayActivatedMeForCollision: 0.7
 --- !u!50 &6448563201309716152
 Rigidbody2D:
   serializedVersion: 4
