@@ -21,6 +21,8 @@ public class TNT_Floor : MonoBehaviour
     public float delayActivatedMeForCollision;
     private float auxDelayActivatedMeForCollision;
     private bool isMortal;
+    private bool activateMe = false;
+    //public bool activateDebug;
     public enum StateTNT
     {
         Normal,
@@ -35,6 +37,21 @@ public class TNT_Floor : MonoBehaviour
         delayDetonate = auxDelayDetonate;
         isMortal = false;
     }
+   
+    void Start()
+    {
+        auxDelayDetonate = delayDetonate;
+        auxDelayActivatedMeForCollision = delayActivatedMeForCollision;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        CheckAnimation();
+        CheckDelayDetonate();
+        //if (activateDebug)
+        //Debug.Log(stateTNT);
+    }
     void CheckDelayDetonate()
     {
         if (enableDelayDetonate)
@@ -43,24 +60,11 @@ public class TNT_Floor : MonoBehaviour
             {
                 delayDetonate = delayDetonate - Time.deltaTime;
             }
-            else if (delayDetonate <= 0 && !isMortal)
+            else if (delayDetonate <= 0 && !isMortal && stateTNT != StateTNT.Detonated)
             {
                 Detonate();
             }
         }
-    }
-    void Start()
-    {
-        auxDelayDetonate = delayDetonate;
-        auxDelayActivatedMeForCollision = delayActivatedMeForCollision;
-        //ActivatedDelayDetonate();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        CheckAnimation();
-        CheckDelayDetonate();
     }
     // Update is called once per frame
     public void CheckAnimation()
@@ -75,7 +79,7 @@ public class TNT_Floor : MonoBehaviour
     }
     public void CheckInDelayDetonateState()
     {
-        if (delayDetonate <= secondInDelayDetonate)
+        if (delayDetonate <= secondInDelayDetonate && stateTNT != StateTNT.Empty && stateTNT != StateTNT.DelayDetonate)
         {
             ActivatedDelayDetonate();
         }
@@ -91,9 +95,12 @@ public class TNT_Floor : MonoBehaviour
     }
     public void CreateEmpty()
     {
-        stateTNT = StateTNT.Empty;
-        isMortal = true;
-        DisabledEnableDelayDetonated();
+        if (stateTNT != StateTNT.Empty)
+        {
+            stateTNT = StateTNT.Empty;
+            isMortal = true;
+            DisabledEnableDelayDetonated();
+        }
     }
     public void ActivatedDelayDetonate()
     {
@@ -118,7 +125,7 @@ public class TNT_Floor : MonoBehaviour
         {
             delayActivatedMeForCollision = delayActivatedMeForCollision - Time.deltaTime;
         }
-        else
+        else if(stateTNT == StateTNT.Normal)
         {
             ActivatedTimerDetonate();
         }
