@@ -5,6 +5,7 @@ using UnityEngine;
 public class TNT_Floor : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float distanceCollision;
     public float delayDetonate;
     public float secondInDelayDetonate;
     private float auxDelayDetonate;
@@ -22,6 +23,8 @@ public class TNT_Floor : MonoBehaviour
     private float auxDelayActivatedMeForCollision;
     private bool isMortal;
     private bool activateMe = false;
+    private Player target;
+    public Player[] players;
     //public bool activateDebug;
     public enum StateTNT
     {
@@ -49,6 +52,7 @@ public class TNT_Floor : MonoBehaviour
     {
         CheckAnimation();
         CheckDelayDetonate();
+        CheckCollisionPlayer(distanceCollision);
         //if (activateDebug)
         //Debug.Log(stateTNT);
     }
@@ -69,6 +73,7 @@ public class TNT_Floor : MonoBehaviour
     // Update is called once per frame
     public void CheckAnimation()
     {
+
         for (int i = 0; i < animations.Count; i++)
         {
             if (animations[i].nameIndex == stateTNT.ToString())
@@ -130,25 +135,55 @@ public class TNT_Floor : MonoBehaviour
             ActivatedTimerDetonate();
         }
     }
-    private void OnTriggerStay2D(Collider2D collider)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collider.tag == "Player")
+        if (collision.tag != "Player" || target != null) return;
+        target = collision.GetComponent<Player>(); 
+        
+    }*/
+    void FindPlayer()
+    {
+        Vector3 distance;
+        for (int i = 0; i < players.Length; i++)
         {
-            Player p = collider.GetComponent<Player>();
-            CheckDelayActivatedMeForCollision();
+            if (players[i] != null)
+            {
+                distance = transform.position - players[i].transform.position;
+                if (distance.magnitude <= distanceCollision)
+                {
+                    target = players[i];
+                }
+            }
+        }
+    }
+    void CheckCollisionPlayer(float distanceCollision)
+    {
+        if (target != null)
+        {
+            Vector3 distance = transform.position - target.transform.position;
+            //Debug.Log(player);
+            //Debug.Log(distance.magnitude);
+            if (distance.magnitude <= distanceCollision)
+                CheckDelayActivatedMeForCollision();
             switch (stateTNT)
             {
                 case StateTNT.Empty:
                     if (isMortal)
                     {
-                        Destroy(p.gameObject);
+                        Destroy(target.gameObject);
+                        target = null;
                     }
                     break;
             }
+            if (distance.magnitude > distanceCollision)
+            {
+                delayActivatedMeForCollision = auxDelayActivatedMeForCollision;
+                target = null;
+            }
         }
-    }
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        delayActivatedMeForCollision = auxDelayActivatedMeForCollision;
+        else
+        {
+            FindPlayer();
+        }
     }
 }

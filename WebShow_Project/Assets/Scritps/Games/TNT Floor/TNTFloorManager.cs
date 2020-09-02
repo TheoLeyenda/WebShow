@@ -10,6 +10,7 @@ public class TNTFloorManager : MonoBehaviour
         DebugMode,
         NormalMode,
     }
+    public Player[] players;
     public List<TNT_Floor> tnt_FloorList;
     private List<TNT_Floor> tnt_ExplotedList;
     public float maxDelayDetonateRandomTNT;
@@ -19,8 +20,10 @@ public class TNTFloorManager : MonoBehaviour
     void Start()
     {
         TNT_Floor[] gameObjects = FindObjectsOfType<TNT_Floor>();
+        players = FindObjectsOfType<Player>();
         for (int i = 0; i < gameObjects.Length; i++)
         {
+            gameObjects[i].players = players;
             tnt_FloorList.Add(gameObjects[i]);
         }
 

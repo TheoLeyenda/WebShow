@@ -17,15 +17,35 @@ public class Player : MonoBehaviour
     private float auxLinearDrag;
     public Rigidbody2D rigidbody2;
     public Animator animator;
+    public BoxCollider2D boxCollider;
+    public bool unidirectionalJump;
+    public float delayJump;
+    private float auxDelayJump;
     //public InventoryPlayer inventoryPlayer;
     public TypeMovement typeMovement;
     [Header("Valor entre el 0 y el 1")]
     public float sensibilityController = 0.1f;
+    private bool isJumping;
+
+    bool right = false;
+    bool left = false;
+    bool up = false;
+    bool down = false;
+
+    Vector3 rightVector;
+    Vector3 leftVector;
+    Vector3 upVector;
+    Vector3 downVector;
     void Start()
     {
         rigidbody2 = GetComponent<Rigidbody2D>();
         auxLinearDrag = rigidbody2.drag;
         rigidbody2.velocity = Vector2.zero;
+        auxDelayJump = delayJump;
+        rightVector = new Vector3(transform.right.x * speed * Time.deltaTime, 0, 0);
+        leftVector = new Vector3(-transform.right.x * speed * Time.deltaTime, 0, 0);
+        upVector = new Vector3(0, transform.up.y * speed * Time.deltaTime, 0);
+        downVector = new Vector3(0, -transform.up.y * speed * Time.deltaTime, 0);
     }
 
     // Update is called once per frame
@@ -41,64 +61,110 @@ public class Player : MonoBehaviour
                 MovementPositions();
                 break;
         }
-            
+        if (isJumping)
+        {
+            CheckJumpDelay();
+        }
+
+    }
+    
+    void CheckJumpDelay()
+    {
+        if (delayJump > 0)
+        {
+            boxCollider.enabled = false;
+            delayJump = delayJump - Time.deltaTime;
+        }
+        else
+        {
+            boxCollider.enabled = true;
+            delayJump = auxDelayJump;
+            isJumping = false;
+        }
     }
     void CheckAnimations()
     {
-        if (Input.GetAxis("Horizontal") != 0)
+        if (!isJumping)
         {
-            if (Input.GetAxis("Horizontal") > sensibilityController)
+            if (!right && !left)
             {
-                animator.Play("WalkLeft");
+                if (right)
+                {
+                    animator.Play("WalkRight");
+                }
+                if (left)
+                {
+                    animator.Play("WalkLeft");
+                }
             }
-            if (Input.GetAxis("Horizontal") < -sensibilityController)
+            else if (!up && !down)
             {
-                animator.Play("WalkRight");
+                if (up)
+                {
+                    animator.Play("WalkUp");
+                }
+                if (down)
+                {
+                    animator.Play("WalkDown");
+                }
             }
         }
-        else if (Input.GetAxis("Vertical") != 0)
+        else
         {
-            if (Input.GetAxis("Vertical") > sensibilityController)
+            if (!right && !left)
             {
-                animator.Play("WalkUp");
+                if (right)
+                {
+                    animator.Play("JumpRight");
+                }
+                if (left)
+                {
+                    animator.Play("JumpLeft");
+                }
             }
-            if (Input.GetAxis("Vertical") < -sensibilityController)
+            else if (!up && !down)
             {
-                animator.Play("WalkDown");
+                if (up)
+                {
+                    animator.Play("JumpUp");
+                }
+                if (down)
+                {
+                    animator.Play("JumpDown");
+                }
             }
         }
     }
+   
     void MovementPositions()
     {
-        bool right = Input.GetAxis("Horizontal") > sensibilityController;
-        bool left = Input.GetAxis("Horizontal") < -sensibilityController;
-        bool up = Input.GetAxis("Vertical") > sensibilityController;
-        bool down = Input.GetAxis("Vertical") < -sensibilityController;
+        CheckInputMovement();
+
         rigidbody2.velocity = Vector2.zero;
         if (right)
         {
-            transform.position = transform.position + new Vector3(transform.right.x * speed * Time.deltaTime,0, 0);
+            transform.position = transform.position + rightVector;
         }
         if (left)
         {
-            transform.position = transform.position + new Vector3(-transform.right.x * speed * Time.deltaTime, 0, 0);
+            transform.position = transform.position + leftVector;
         }
         if (up)
         {
-            transform.position = transform.position + new Vector3(0, transform.up.y * speed * Time.deltaTime, 0);
+            transform.position = transform.position + upVector;
         }
         if (down)
         {
-            transform.position = transform.position + new Vector3(0, -transform.up.y * speed * Time.deltaTime, 0);
+            transform.position = transform.position + downVector;
         }
+
+        CheckInputJump();
 
     }
     void MovementPhysics()
     {
-        bool right = Input.GetAxis("Horizontal") > sensibilityController;
-        bool left = Input.GetAxis("Horizontal") < -sensibilityController;
-        bool up = Input.GetAxis("Vertical") > sensibilityController;
-        bool down = Input.GetAxis("Vertical") < -sensibilityController;
+        CheckInputMovement();
+
         if (right)
         {
             rigidbody2.AddForce(transform.right * speed * Time.deltaTime, ForceMode2D.Force);
@@ -124,7 +190,28 @@ public class Player : MonoBehaviour
         {
             rigidbody2.drag = auxLinearDrag;
         }
+
+        CheckInputJump();
     }
+
+    public void CheckInputMovement()
+    {
+        if (!isJumping || !unidirectionalJump)
+        {
+            right = Input.GetAxis("Horizontal") > sensibilityController;
+            left = Input.GetAxis("Horizontal") < -sensibilityController;
+            up = Input.GetAxis("Vertical") > sensibilityController;
+            down = Input.GetAxis("Vertical") < -sensibilityController;
+        }
+    }
+    public void CheckInputJump()
+    {
+        if (!isJumping && unidirectionalJump && Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Coin")
