@@ -34,7 +34,7 @@ public class UI_Manager : MonoBehaviour
     }
     public void ClockFunction()
     {
-        if (clock.seconds >= 10)
+        if (Mathf.Round(clock.seconds) >= 10)
         {
             timeParty.text = Mathf.Round(clock.minutes) + ":" + Mathf.Round(clock.seconds);
         }

@@ -63,12 +63,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scritps\Clock.cs" />
+    <Compile Include="Assets\Scritps\CoinsGenerator.cs" />
     <Compile Include="Assets\Scritps\Config.cs" />
     <Compile Include="Assets\Scritps\Games\GeneralGame\InventoryPlayer.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\Player.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\TNT_Floor.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\TNT_Run.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\TNTFloorManager.cs" />
+    <Compile Include="Assets\Scritps\Pool\Pool.cs" />
+    <Compile Include="Assets\Scritps\Pool\PoolObject.cs" />
     <Compile Include="Assets\Scritps\UI_Manager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Theo/Desktop/WebShow/WebShow_Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
