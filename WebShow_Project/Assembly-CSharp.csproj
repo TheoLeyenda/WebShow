@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scritps\Games\TNT Run\TNT_Run.cs" />
     <Compile Include="Assets\Scritps\Pool\Pool.cs" />
     <Compile Include="Assets\Scritps\Pool\PoolObject.cs" />
+    <Compile Include="Assets\Scritps\SelfDestructible.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Theo/Desktop/WebShow/WebShow_Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
