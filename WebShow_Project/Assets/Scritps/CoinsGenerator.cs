@@ -12,7 +12,12 @@ public class CoinsGenerator : MonoBehaviour
     public bool startGeneration;
     public Pool poolCoin;
     public bool enableGeneration = true;
+    public bool enableSubstractDelay = true;
+    public float delaySubstractDelay = 0.2f;
+    private float auxDelaySubstractDelay;
 
+    public float minValueMinDelayGeneration = 1;
+    public float minValueMaxDelayGeneration = 3;
     public float maxRandX;
     public float minRandX;
 
@@ -21,6 +26,7 @@ public class CoinsGenerator : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
+        auxDelaySubstractDelay = delaySubstractDelay;
         if (startGeneration)
         {
             SpawnCoins();
@@ -29,8 +35,36 @@ public class CoinsGenerator : MonoBehaviour
     }
     void Update()
     {
-        if(enableGeneration)
+        if (enableGeneration)
+        {
             CheckDelayGenerationCoin();
+            if(enableSubstractDelay)
+                CheckSubstractRandomDelay();
+        }
+    }
+    public void CheckSubstractRandomDelay()
+    {
+        if (delaySubstractDelay > 0)
+        {
+            delaySubstractDelay = delaySubstractDelay - Time.deltaTime;
+        }
+        else
+        {
+            delaySubstractDelay = auxDelaySubstractDelay;
+            SubstractRandomDelay();
+        }
+    }
+
+    public void SubstractRandomDelay()
+    {
+        if (minDelayGeneration > minValueMinDelayGeneration)
+        {
+            minDelayGeneration = minDelayGeneration - Time.deltaTime;
+        }
+        if (maxDelayGeneration > minValueMaxDelayGeneration)
+        {
+            maxDelayGeneration = maxDelayGeneration - Time.deltaTime;
+        }
     }
     public void CheckDelayGenerationCoin()
     {
