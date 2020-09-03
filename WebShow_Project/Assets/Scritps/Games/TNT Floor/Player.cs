@@ -147,16 +147,16 @@ public class Player : MonoBehaviour
                 switch (lookDirection)
                 {
                     case LookDirection.Down:
-                        //animator.Play("IdleDown");
+                        animator.Play("IdleDown");
                         break;
                     case LookDirection.Up:
-                        //animator.Play("IdleUp");
+                        animator.Play("IdleUp");
                         break;
                     case LookDirection.Left:
-                        //animator.Play("IdleLeft");
+                        animator.Play("IdleLeft");
                         break;
                     case LookDirection.Right:
-                        //animator.Play("IdleRight");
+                        animator.Play("IdleRight");
                         break;
                 }
             }
