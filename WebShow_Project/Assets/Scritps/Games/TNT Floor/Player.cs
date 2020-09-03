@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 public class Player : MonoBehaviour
 {
 
@@ -47,8 +49,15 @@ public class Player : MonoBehaviour
     Vector3 leftVector;
     Vector3 upVector;
     Vector3 downVector;
+
+    InventoryPlayer inventoryPlayer;
+
+    public static event Action<InventoryPlayer> OnTakePoint;
     void Start()
     {
+        GameObject go = GameObject.Find("InventoryPlayer" + numberPlayer);
+        if (go != null)
+            inventoryPlayer = go.GetComponent<InventoryPlayer>(); 
         rigidbody2 = GetComponent<Rigidbody2D>();
         auxLinearDrag = rigidbody2.drag;
         rigidbody2.velocity = Vector2.zero;
@@ -58,6 +67,9 @@ public class Player : MonoBehaviour
         upVector = new Vector3(0, transform.up.y * speed * Time.deltaTime, 0);
         downVector = new Vector3(0, -transform.up.y * speed * Time.deltaTime, 0);
         auxSpeed = speed;
+
+        if (OnTakePoint != null)
+            OnTakePoint(inventoryPlayer);
     }
 
     // Update is called once per frame
@@ -85,13 +97,13 @@ public class Player : MonoBehaviour
     {
         if (delayJump > 0)
         {
-            boxCollider.enabled = false;
+            //boxCollider.enabled = false;
             delayJump = delayJump - Time.deltaTime;
             speed = speedJump;
         }
         else
         {
-            boxCollider.enabled = true;
+            //boxCollider.enabled = true;
             delayJump = auxDelayJump;
             isJumping = false;
             invulnerhabilidad = false;
@@ -261,13 +273,12 @@ public class Player : MonoBehaviour
     {
         if (collider.tag == "Coin")
         {
-            GameObject go = GameObject.Find("InventoryPlayer" + numberPlayer);
-            if (go != null)
+            if (inventoryPlayer != null)
             {
-                InventoryPlayer inventoryPlayer = go.GetComponent<InventoryPlayer>();
-                if (inventoryPlayer != null)
+                inventoryPlayer.currentCoin++;
+                if (OnTakePoint != null)
                 {
-                    inventoryPlayer.currentCoin++;
+                    OnTakePoint(inventoryPlayer);
                 }
             }
             Destroy(collider.gameObject);

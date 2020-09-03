@@ -46,15 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf35edae626ff6b45885816781cdf723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberPlayer: 0
+  numberPlayer: 1
   speed: 7
-  speedJump: 15
+  speedJump: 20
   stopMovementForCode: 1
   rigidbody2: {fileID: 2786243851863900988}
   animator: {fileID: 5406524769157539473}
   boxCollider: {fileID: 2786243851863900962}
   unidirectionalJump: 1
-  delayJump: 0.5
+  delayJump: 0.45
   typeMovement: 0
   sensibilityController: 0.2
   invulnerhabilidad: 0

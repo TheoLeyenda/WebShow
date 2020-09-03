@@ -10,6 +10,8 @@ public class TNTFloorManager : MonoBehaviour
         DebugMode,
         NormalMode,
     }
+
+
     public Player[] players;
     public List<TNT_Floor> tnt_FloorList;
     private List<TNT_Floor> tnt_ExplotedList;
