@@ -65,7 +65,9 @@
     <Compile Include="Assets\Scritps\Clock.cs" />
     <Compile Include="Assets\Scritps\CoinsGenerator.cs" />
     <Compile Include="Assets\Scritps\Config.cs" />
+    <Compile Include="Assets\Scritps\ExitDoor.cs" />
     <Compile Include="Assets\Scritps\Games\GeneralGame\InventoryPlayer.cs" />
+    <Compile Include="Assets\Scritps\Games\TNT Floor\GameManager.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\Player.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\TNT_Floor.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Floor\TNT_Run.cs" />

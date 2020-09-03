@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberPlayer: 1
   speed: 7
-  speedJump: 20
+  speedJump: 10
   stopMovementForCode: 1
   rigidbody2: {fileID: 2786243851863900988}
   animator: {fileID: 5406524769157539473}
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 985444427722084436, guid: 7a41bec0272f31c42833be72b8ee07e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

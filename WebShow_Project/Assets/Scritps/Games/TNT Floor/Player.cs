@@ -62,10 +62,10 @@ public class Player : MonoBehaviour
         auxLinearDrag = rigidbody2.drag;
         rigidbody2.velocity = Vector2.zero;
         auxDelayJump = delayJump;
-        rightVector = new Vector3(transform.right.x * speed * Time.deltaTime, 0, 0);
-        leftVector = new Vector3(-transform.right.x * speed * Time.deltaTime, 0, 0);
-        upVector = new Vector3(0, transform.up.y * speed * Time.deltaTime, 0);
-        downVector = new Vector3(0, -transform.up.y * speed * Time.deltaTime, 0);
+        rightVector = new Vector3(transform.right.x, 0, 0);
+        leftVector = new Vector3(-transform.right.x, 0, 0);
+        upVector = new Vector3(0, transform.up.y, 0);
+        downVector = new Vector3(0, -transform.up.y, 0);
         auxSpeed = speed;
 
         if (OnTakePoint != null)
@@ -199,19 +199,19 @@ public class Player : MonoBehaviour
         rigidbody2.velocity = Vector2.zero;
         if (right)
         {
-            transform.position = transform.position + rightVector;
+            transform.position = transform.position + rightVector * Time.deltaTime * speed;
         }
         if (left)
         {
-            transform.position = transform.position + leftVector;
+            transform.position = transform.position + leftVector * Time.deltaTime * speed;
         }
         if (up)
         {
-            transform.position = transform.position + upVector;
+            transform.position = transform.position + upVector * Time.deltaTime * speed;
         }
         if (down)
         {
-            transform.position = transform.position + downVector;
+            transform.position = transform.position + downVector * Time.deltaTime * speed;
         }
 
         CheckInputJump();
@@ -281,7 +281,7 @@ public class Player : MonoBehaviour
                     OnTakePoint(inventoryPlayer);
                 }
             }
-            Destroy(collider.gameObject);
+            collider.gameObject.SetActive(false);
         }
     }
 }

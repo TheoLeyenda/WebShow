@@ -7,7 +7,8 @@ public class Pool : MonoBehaviour {
     public GameObject Ball;
     private GameObject parent;
     public string parentName;
-    private List<GameObject> CommonBalls;
+    [HideInInspector]
+    public List<GameObject> CommonBalls;
     public int count;
     private int id;
     private bool substractValuesBalls;
@@ -55,8 +56,18 @@ public class Pool : MonoBehaviour {
         }
         id = 0;
     }
-    // Update is called once per frame
-    void Update () {
+    public void DisableObjectsPool()
+    {
+        if (CommonBalls != null)
+        {
+            for (int i = 0; i < CommonBalls.Count; i++)
+            {
+                if (CommonBalls[i] != null)
+                {
+                    CommonBalls[i].SetActive(false);
+                }
+            }
+        }
     }
     public List<GameObject> GetListPelotasComunes()
     {

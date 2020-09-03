@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TNTFloorManager : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class TNTFloorManager : MonoBehaviour
 
     public Player[] players;
     public List<TNT_Floor> tnt_FloorList;
-    private List<TNT_Floor> tnt_ExplotedList;
+    [HideInInspector]
+    public List<TNT_Floor> tnt_ExplotedList;
     public float maxDelayDetonateRandomTNT;
     public float minDelayDetonateRandomTNT;
     private float delay;
@@ -38,6 +40,10 @@ public class TNTFloorManager : MonoBehaviour
     {
         CheckDelayActivatedTNT();
         ChechDebugMode();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
     public void ChechDebugMode()
     {

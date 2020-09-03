@@ -25,6 +25,7 @@ public class TNT_Floor : MonoBehaviour
     //private bool activateMe = false;
     private Player target;
     public Player[] players;
+    public bool enableUpdate = true;
     //public bool activateDebug;
     public enum StateTNT
     {
@@ -51,8 +52,11 @@ public class TNT_Floor : MonoBehaviour
     void Update()
     {
         CheckAnimation();
-        CheckDelayDetonate();
-        CheckCollisionPlayer(distanceCollision);
+        if (enableUpdate)
+        {
+            CheckDelayDetonate();
+            CheckCollisionPlayer(distanceCollision);
+        }
         //if (activateDebug)
         //Debug.Log(stateTNT);
     }
@@ -73,7 +77,6 @@ public class TNT_Floor : MonoBehaviour
     // Update is called once per frame
     public void CheckAnimation()
     {
-
         for (int i = 0; i < animations.Count; i++)
         {
             if (animations[i].nameIndex == stateTNT.ToString())
