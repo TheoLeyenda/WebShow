@@ -11,6 +11,7 @@ public class CoinsGenerator : MonoBehaviour
     private float delayGeneration;
     public bool startGeneration;
     public Pool poolCoin;
+    public bool enableGeneration = true;
 
     public float maxRandX;
     public float minRandX;
@@ -28,6 +29,7 @@ public class CoinsGenerator : MonoBehaviour
     }
     void Update()
     {
+        if(enableGeneration)
         CheckDelayGenerationCoin();
     }
     public void CheckDelayGenerationCoin()

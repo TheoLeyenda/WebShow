@@ -3,86 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TNTFloorManager : MonoBehaviour
+namespace TNT_Floor
 {
-    // Start is called before the first frame update
-    public enum ModeManager
+    public class TNTFloorManager : MonoBehaviour
     {
-        DebugMode,
-        NormalMode,
-    }
-
-
-    public Player[] players;
-    public List<TNT_Floor> tnt_FloorList;
-    [HideInInspector]
-    public List<TNT_Floor> tnt_ExplotedList;
-    public float maxDelayDetonateRandomTNT;
-    public float minDelayDetonateRandomTNT;
-    private float delay;
-    public ModeManager modeManager;
-    void Start()
-    {
-        TNT_Floor[] gameObjects = FindObjectsOfType<TNT_Floor>();
-        players = FindObjectsOfType<Player>();
-        for (int i = 0; i < gameObjects.Length; i++)
+        // Start is called before the first frame update
+        public enum ModeManager
         {
-            gameObjects[i].players = players;
-            tnt_FloorList.Add(gameObjects[i]);
+            DebugMode,
+            NormalMode,
         }
 
-        tnt_ExplotedList = new List<TNT_Floor>();
-        delay = Random.Range(minDelayDetonateRandomTNT, maxDelayDetonateRandomTNT);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        CheckDelayActivatedTNT();
-        ChechDebugMode();
-        if (Input.GetKeyDown(KeyCode.R))
+        public PlayerTopDown[] players;
+        public List<TNT_Floor> tnt_FloorList;
+        [HideInInspector]
+        public List<TNT_Floor> tnt_ExplotedList;
+        public float maxDelayDetonateRandomTNT;
+        public float minDelayDetonateRandomTNT;
+        private float delay;
+        public ModeManager modeManager;
+        void Start()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
-    public void ChechDebugMode()
-    {
-        if (modeManager == ModeManager.DebugMode)
-        {
-            if (Input.GetKey(KeyCode.E))
+            TNT_Floor[] gameObjects = FindObjectsOfType<TNT_Floor>();
+            players = FindObjectsOfType<PlayerTopDown>();
+            for (int i = 0; i < gameObjects.Length; i++)
             {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#endif
-                Application.Quit();
+                gameObjects[i].players = players;
+                tnt_FloorList.Add(gameObjects[i]);
             }
-        }
-    }
-    public void CheckDelayActivatedTNT()
-    {
-        if (delay > 0)
-        {
-            delay = delay - Time.deltaTime;
-        }
-        else if (delay <= 0)
-        {
+
+            tnt_ExplotedList = new List<TNT_Floor>();
             delay = Random.Range(minDelayDetonateRandomTNT, maxDelayDetonateRandomTNT);
-            DetonateRandomTNT();
         }
-    }
-    void DetonateRandomTNT()
-    {
-        if (tnt_FloorList.Count > 0)
-        {
-            int index = Random.Range(0, tnt_FloorList.Count);
 
-            TNT_Floor tnt_floor = tnt_FloorList[index];
-            if (tnt_floor.stateTNT == TNT_Floor.StateTNT.Normal)
+        // Update is called once per frame
+        void Update()
+        {
+            CheckDelayActivatedTNT();
+            CheckDebugMode();
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                tnt_FloorList[index].ActivatedTimerDetonate();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-            tnt_FloorList.Remove(tnt_FloorList[index]);
-            tnt_ExplotedList.Add(tnt_floor);
+        }
+        public void CheckDebugMode()
+        {
+            if (modeManager == ModeManager.DebugMode)
+            {
+                if (Input.GetKey(KeyCode.E))
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#endif
+                    Application.Quit();
+                }
+            }
+        }
+        public void CheckDelayActivatedTNT()
+        {
+            if (delay > 0)
+            {
+                delay = delay - Time.deltaTime;
+            }
+            else if (delay <= 0)
+            {
+                delay = Random.Range(minDelayDetonateRandomTNT, maxDelayDetonateRandomTNT);
+                DetonateRandomTNT();
+            }
+        }
+        void DetonateRandomTNT()
+        {
+            if (tnt_FloorList.Count > 0)
+            {
+                int index = Random.Range(0, tnt_FloorList.Count);
+
+                TNT_Floor tnt_floor = tnt_FloorList[index];
+                if (tnt_floor.stateTNT == TNT_Floor.StateTNT.Normal)
+                {
+                    tnt_FloorList[index].ActivatedTimerDetonate();
+                }
+                tnt_FloorList.Remove(tnt_FloorList[index]);
+                tnt_ExplotedList.Add(tnt_floor);
+            }
         }
     }
 }
