@@ -22,7 +22,7 @@ public class TNT_Floor : MonoBehaviour
     public float delayActivatedMeForCollision;
     private float auxDelayActivatedMeForCollision;
     private bool isMortal;
-    private bool activateMe = false;
+    //private bool activateMe = false;
     private Player target;
     public Player[] players;
     //public bool activateDebug;
@@ -168,7 +168,7 @@ public class TNT_Floor : MonoBehaviour
             switch (stateTNT)
             {
                 case StateTNT.Empty:
-                    if (isMortal)
+                    if (isMortal && !target.invulnerhabilidad)
                     {
                         Destroy(target.gameObject);
                         target = null;

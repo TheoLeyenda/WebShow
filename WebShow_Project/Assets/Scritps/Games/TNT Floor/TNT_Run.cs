@@ -67,7 +67,7 @@ public class TNT_Run : MonoBehaviour
                     Detonate();
                     break;
                 case StateTNT.Empty:
-                    if (isMortal)
+                    if (isMortal && !p.invulnerhabilidad)
                     {
                         Destroy(p.gameObject);
                     }

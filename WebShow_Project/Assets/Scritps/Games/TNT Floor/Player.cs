@@ -9,8 +9,16 @@ public class Player : MonoBehaviour
         Position,
         Physics,
     }
+    public enum LookDirection
+    {
+        Left,
+        Right,
+        Up,
+        Down,
+    }
     //El salto ejecutara la animacion de salto y desactivara el boxCollider
     public int numberPlayer;
+    private float auxSpeed;
     public float speed;
     public float speedJump;
     public bool stopMovementForCode;
@@ -26,11 +34,14 @@ public class Player : MonoBehaviour
     [Header("Valor entre el 0 y el 1")]
     public float sensibilityController = 0.1f;
     private bool isJumping;
-
+    [HideInInspector]
+    public bool invulnerhabilidad = false;
     bool right = false;
     bool left = false;
     bool up = false;
     bool down = false;
+
+    private LookDirection lookDirection;
 
     Vector3 rightVector;
     Vector3 leftVector;
@@ -46,12 +57,13 @@ public class Player : MonoBehaviour
         leftVector = new Vector3(-transform.right.x * speed * Time.deltaTime, 0, 0);
         upVector = new Vector3(0, transform.up.y * speed * Time.deltaTime, 0);
         downVector = new Vector3(0, -transform.up.y * speed * Time.deltaTime, 0);
+        auxSpeed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckAnimations();
+        
         switch (typeMovement)
         {
             case TypeMovement.Physics:
@@ -61,11 +73,12 @@ public class Player : MonoBehaviour
                 MovementPositions();
                 break;
         }
+        CheckAnimations();
         if (isJumping)
         {
             CheckJumpDelay();
+           
         }
-
     }
     
     void CheckJumpDelay()
@@ -74,63 +87,94 @@ public class Player : MonoBehaviour
         {
             boxCollider.enabled = false;
             delayJump = delayJump - Time.deltaTime;
+            speed = speedJump;
         }
         else
         {
             boxCollider.enabled = true;
             delayJump = auxDelayJump;
             isJumping = false;
+            invulnerhabilidad = false;
+            speed = auxSpeed;
         }
     }
     void CheckAnimations()
     {
         if (!isJumping)
         {
-            if (!right && !left)
+            //Debug.Log("HOLA CAPO");
+
+            if (right || left)
             {
                 if (right)
                 {
                     animator.Play("WalkRight");
+                    lookDirection = LookDirection.Right;
                 }
                 if (left)
                 {
                     animator.Play("WalkLeft");
+                    lookDirection = LookDirection.Left;
                 }
             }
-            else if (!up && !down)
+            else if (up || down)
             {
                 if (up)
                 {
                     animator.Play("WalkUp");
+                    lookDirection = LookDirection.Up;
                 }
                 if (down)
                 {
                     animator.Play("WalkDown");
+                    lookDirection = LookDirection.Down;
+                }
+            }
+            else if(!right && !left && !down && !up)
+            {
+                switch (lookDirection)
+                {
+                    case LookDirection.Down:
+                        //animator.Play("IdleDown");
+                        break;
+                    case LookDirection.Up:
+                        //animator.Play("IdleUp");
+                        break;
+                    case LookDirection.Left:
+                        //animator.Play("IdleLeft");
+                        break;
+                    case LookDirection.Right:
+                        //animator.Play("IdleRight");
+                        break;
                 }
             }
         }
         else
         {
-            if (!right && !left)
+            if (right || left)
             {
                 if (right)
                 {
                     animator.Play("JumpRight");
+                    lookDirection = LookDirection.Right;
                 }
                 if (left)
                 {
                     animator.Play("JumpLeft");
+                    lookDirection = LookDirection.Left;
                 }
             }
-            else if (!up && !down)
+            else if (up || down)
             {
                 if (up)
                 {
                     animator.Play("JumpUp");
+                    lookDirection = LookDirection.Up;
                 }
                 if (down)
                 {
                     animator.Play("JumpDown");
+                    lookDirection = LookDirection.Down;
                 }
             }
         }
@@ -209,6 +253,7 @@ public class Player : MonoBehaviour
         if (!isJumping && unidirectionalJump && Input.GetButtonDown("Jump"))
         {
             isJumping = true;
+            invulnerhabilidad = true;
         }
     }
 

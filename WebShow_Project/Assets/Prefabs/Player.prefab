@@ -48,15 +48,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberPlayer: 0
   speed: 7
-  speedJump: 10
+  speedJump: 15
   stopMovementForCode: 1
   rigidbody2: {fileID: 2786243851863900988}
   animator: {fileID: 5406524769157539473}
   boxCollider: {fileID: 2786243851863900962}
   unidirectionalJump: 1
-  delayJump: 1
+  delayJump: 0.5
   typeMovement: 0
   sensibilityController: 0.2
+  invulnerhabilidad: 0
 --- !u!50 &2786243851863900988
 Rigidbody2D:
   serializedVersion: 4
