@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: {fileID: 2140269604}
-  DisableCoins: 1
+  DisableCoins: 0
   doorExit: {fileID: 1316909952}
   arrowExit: {fileID: 0}
   tntObjectList:

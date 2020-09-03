@@ -30,7 +30,7 @@ public class CoinsGenerator : MonoBehaviour
     void Update()
     {
         if(enableGeneration)
-        CheckDelayGenerationCoin();
+            CheckDelayGenerationCoin();
     }
     public void CheckDelayGenerationCoin()
     {

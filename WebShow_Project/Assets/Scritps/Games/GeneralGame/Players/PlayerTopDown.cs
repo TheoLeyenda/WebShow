@@ -57,7 +57,9 @@ public class PlayerTopDown : MonoBehaviour
     {
         GameObject go = GameObject.Find("InventoryPlayer" + numberPlayer);
         if (go != null)
-            inventoryPlayer = go.GetComponent<InventoryPlayer>(); 
+            inventoryPlayer = go.GetComponent<InventoryPlayer>();
+        else
+            Debug.Log("NULO EL INVENTARIO");
         rigidbody2 = GetComponent<Rigidbody2D>();
         auxLinearDrag = rigidbody2.drag;
         rigidbody2.velocity = Vector2.zero;

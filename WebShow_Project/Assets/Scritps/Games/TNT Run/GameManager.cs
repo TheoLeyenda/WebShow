@@ -92,8 +92,8 @@ namespace TNT_Run
             if (coins != null && DisableCoins)
             {
                 coins.poolCoin.DisableObjectsPool();
-                coins.enableGeneration = false;
             }
+            coins.enableGeneration = false;
         }
     }
 }

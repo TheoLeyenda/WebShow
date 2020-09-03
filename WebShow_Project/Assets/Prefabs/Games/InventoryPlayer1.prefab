@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 233219497239751350}
   - component: {fileID: 233219497239751305}
   m_Layer: 0
-  m_Name: InventoryPlayer
+  m_Name: InventoryPlayer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentCoin: 0
   countGeneralCoin: 0
-  numberPlayerInventory: 0
+  numberPlayerInventory: 1
