@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace TNT_Floor
 {
+    using Players;
     public class TNTFloorManager : MonoBehaviour
     {
         // Start is called before the first frame update

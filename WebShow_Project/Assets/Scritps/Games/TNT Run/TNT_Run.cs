@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace TNT_Run
 {
+    using Players;
     public class TNT_Run : MonoBehaviour
     {
         // Start is called before the first frame update
@@ -25,6 +26,13 @@ namespace TNT_Run
         public List<AnimationsData> animations;
         public Animator animator;
         public StateTNT stateTNT;
+
+        public bool enableUpdate = true;
+        public float distanceCollision;
+
+        private PlayerTopDown target;
+        public PlayerTopDown[] players;
+
         void Start()
         {
 
@@ -35,6 +43,8 @@ namespace TNT_Run
         void Update()
         {
             CheckAnimation();
+            if(enableUpdate)
+            CheckCollisionPlayer(distanceCollision);
         }
         // Update is called once per frame
 
@@ -57,23 +67,53 @@ namespace TNT_Run
             stateTNT = StateTNT.Empty;
             isMortal = true;
         }
-        private void OnTriggerEnter2D(Collider2D collider)
+        void FindPlayer()
         {
-            if (collider.tag == "Player")
+            Vector3 distance;
+            for (int i = 0; i < players.Length; i++)
             {
-                PlayerTopDown p = collider.GetComponent<PlayerTopDown>();
-                switch (stateTNT)
+                if (players[i] != null)
                 {
-                    case StateTNT.Normal:
-                        Detonate();
-                        break;
-                    case StateTNT.Empty:
-                        if (isMortal && !p.invulnerhabilidad)
-                        {
-                            Destroy(p.gameObject);
-                        }
-                        break;
+                    distance = transform.position - players[i].transform.position;
+                    if (distance.magnitude <= distanceCollision)
+                    {
+                        target = players[i];
+                    }
                 }
+            }
+        }
+        void CheckCollisionPlayer(float distanceCollision)
+        {
+            if (target != null)
+            {
+                Vector3 distance = transform.position - target.transform.position;
+                //Debug.Log(player);
+                //Debug.Log(distance.magnitude);
+                if (distance.magnitude <= distanceCollision)
+                    CollisionMe();
+                if (distance.magnitude > distanceCollision)
+                {
+                    target = null;
+                }
+            }
+            else
+            {
+                FindPlayer();
+            }
+        }
+        void CollisionMe()
+        {
+            switch (stateTNT)
+            {
+                case StateTNT.Normal:
+                    Detonate();
+                    break;
+                case StateTNT.Empty:
+                    if (isMortal && !target.invulnerhabilidad)
+                    {
+                        Destroy(target.gameObject);
+                    }
+                    break;
             }
         }
     }

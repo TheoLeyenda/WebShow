@@ -6,14 +6,16 @@ using UnityEngine.SceneManagement;
 namespace TNT_Run
 {
     using TNT_Floor;
+    using Players;
     public class GameManager : MonoBehaviour
     {
         public CoinsGenerator coins;
         public bool DisableCoins = true;
         public GameObject doorExit;
         public GameObject arrowExit;
-        public List<TNT_Run> tntObjectList;
+        public TNT_Run[] tntRunObjectList;
         public List<TNT_Floor> tntFloorObjectsList;
+        public PlayerTopDown[] players;
         public enum GameMode
         {
             Multiplayer,
@@ -23,6 +25,15 @@ namespace TNT_Run
         {
             DebugMode,
             NormalMode,
+        }
+        private void Start()
+        {
+            tntRunObjectList = FindObjectsOfType<TNT_Run>();
+            players = FindObjectsOfType<PlayerTopDown>();
+            for (int i = 0; i < tntRunObjectList.Length; i++)
+            {
+                tntRunObjectList[i].players = players;
+            }
         }
         public GameMode gameMode = GameMode.Time;
         public ModeManager modeManager;
@@ -73,12 +84,13 @@ namespace TNT_Run
             {
                 arrowExit.SetActive(true);
             }
-            for (int i = 0; i < tntObjectList.Count; i++)
+            for (int i = 0; i < tntRunObjectList.Length; i++)
             {
-                if (tntObjectList[i] != null)
+                if (tntRunObjectList[i] != null)
                 {
-                    tntObjectList[i].stateTNT = TNT_Run.StateTNT.Normal;
-                    tntObjectList[i].isMortal = false;
+                    tntRunObjectList[i].stateTNT = TNT_Run.StateTNT.Normal;
+                    tntRunObjectList[i].isMortal = false;
+                    tntRunObjectList[i].enableUpdate = false;
                 }
             }
             for (int i = 0; i < tntFloorObjectsList.Count; i++)

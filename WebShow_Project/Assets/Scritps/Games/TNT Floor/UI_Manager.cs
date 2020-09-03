@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Players;
 public class UI_Manager : MonoBehaviour
 {
     public Text textScore;
