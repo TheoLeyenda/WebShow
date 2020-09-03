@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 namespace TNT_Floor
 {
+    using Players;
     public class GameManager : MonoBehaviour
     {
         // Start is called before the first frame update
@@ -12,9 +13,22 @@ namespace TNT_Floor
         public GameObject doorExit;
         public GameObject arrowExit;
         public bool DisableCoins = true;
+        public int neededPointsForFinishLevel;
+        private bool finishTime = false;
+        private bool neededPoints = false;
+        public static event Action<GameManager> settingNeededPointsForFinishLevel;
+
+        private void Start()
+        {
+            if (settingNeededPointsForFinishLevel != null)
+            {
+                settingNeededPointsForFinishLevel(this);
+            }
+        }
         private void OnEnable()
         {
-            Clock.OnFinishClock += FinishGame;
+            Clock.OnFinishClock += FinishTime;
+            PlayerTopDown.OnTakePoint += AddPoint;
             if (arrowExit != null)
             {
                 arrowExit.SetActive(false);
@@ -26,9 +40,36 @@ namespace TNT_Floor
         }
         private void OnDisable()
         {
-            Clock.OnFinishClock -= FinishGame;
+            Clock.OnFinishClock -= FinishTime;
+            PlayerTopDown.OnTakePoint -= AddPoint;
         }
-        public void FinishGame(Clock clock)
+        public void FinishTime(Clock clock)
+        {
+            if (clock == null) return;
+            if (clock.minutes <= 0 && clock.seconds <= 0)
+            {
+                finishTime = true;
+            }
+            CheckFinishLevel();
+        }
+        public void AddPoint(InventoryPlayer inventoryPlayer)
+        {
+            if (inventoryPlayer == null) return;
+            Debug.Log(inventoryPlayer.currentCoin);
+            if (inventoryPlayer.currentCoin >= neededPointsForFinishLevel)
+            {
+                neededPoints = true;
+            }
+            CheckFinishLevel();
+        }
+        public void CheckFinishLevel()
+        {
+            if (neededPoints && finishTime)
+            {
+                FinishGame();
+            }
+        }
+        public void FinishGame()
         {
             if (doorExit != null)
             {

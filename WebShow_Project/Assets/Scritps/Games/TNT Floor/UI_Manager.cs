@@ -1,26 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Players;
 public class UI_Manager : MonoBehaviour
 {
     public Text textScore;
+    public Text textNeedScore;
     public Text timeParty;
     public Clock clock;
+    private int countNeedScore = 0;
     private void OnEnable()
     {
         PlayerTopDown.OnTakePoint += UpdateScore;
+        TNT_Floor.GameManager.settingNeededPointsForFinishLevel += SetCountNeedScore;
     }
     private void OnDisable()
     {
         PlayerTopDown.OnTakePoint -= UpdateScore;
+        TNT_Floor.GameManager.settingNeededPointsForFinishLevel -= SetCountNeedScore;
+    }
+    public void SetCountNeedScore(TNT_Floor.GameManager manager)
+    {
+        countNeedScore = manager.neededPointsForFinishLevel;
     }
     public void UpdateScore(InventoryPlayer p)
     {
         if (p != null)
         {
-            textScore.text = "" + p.currentCoin;
+            if (textScore != null)
+            {
+                textScore.text = "" + p.currentCoin;
+            }
+
+            if (textNeedScore != null)
+            {
+                if(p.currentCoin <= countNeedScore)
+                textNeedScore.text = p.currentCoin + "/" + countNeedScore;
+            }
         }
     }
     private void Update()
