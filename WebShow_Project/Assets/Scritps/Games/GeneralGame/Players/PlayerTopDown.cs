@@ -266,7 +266,7 @@ namespace Players
         }
         public void CheckInputJump()
         {
-            if (!isJumping && unidirectionalJump && Input.GetButtonDown("Jump"))
+            if (!isJumping && Input.GetButtonDown("Jump"))
             {
                 isJumping = true;
                 invulnerhabilidad = true;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2786243851863900988}
   - component: {fileID: 2786243851863900962}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_TopDown
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   rigidbody2: {fileID: 2786243851863900988}
   animator: {fileID: 5406524769157539473}
   boxCollider: {fileID: 2786243851863900962}
-  unidirectionalJump: 1
+  unidirectionalJump: 0
   delayJump: 0.45
   typeMovement: 0
   sensibilityController: 0.2

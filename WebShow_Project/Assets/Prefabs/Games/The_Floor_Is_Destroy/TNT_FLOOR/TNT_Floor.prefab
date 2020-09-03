@@ -113,9 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f49b12e473db64c91aa150da522d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceCollision: 1.5
+  distanceCollision: 1
   delayDetonate: 3
   secondInDelayDetonate: 1.366
+  enableDelayDetonate: 0
   animations:
   - name: Idle
     nameIndex: Normal
@@ -131,3 +132,4 @@ MonoBehaviour:
   stateTNT: 0
   delayActivatedMeForCollision: 0.7
   players: []
+  enableUpdate: 1

@@ -9485,6 +9485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinsGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 3135791636393940738, guid: 4f3cdf1961f98c048963b08da2653a8d,
+        type: 3}
+      propertyPath: startGeneration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135791636393940741, guid: 4f3cdf1961f98c048963b08da2653a8d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9782,6 +9787,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2786243851863900989, guid: ab6b5fbed96d1364990d12ac9cd31c87,
+        type: 3}
+      propertyPath: unidirectionalJump
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab6b5fbed96d1364990d12ac9cd31c87, type: 3}
 --- !u!1001 &4635720496851854401
@@ -9944,6 +9954,11 @@ PrefabInstance:
       propertyPath: doorExit
       value: 
       objectReference: {fileID: 855977985}
+    - target: {fileID: 6442978935157886086, guid: 6ad3304e77b72744796f921b91b22697,
+        type: 3}
+      propertyPath: minutes
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ad3304e77b72744796f921b91b22697, type: 3}
 --- !u!1001 &7352387178088287304
