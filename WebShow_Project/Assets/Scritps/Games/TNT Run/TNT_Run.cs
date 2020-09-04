@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TNT_Run
 {
     using Players;
-    public class TNT_Run : MonoBehaviour
+    public class TNT_Run : IEAviableObject
     {
         // Start is called before the first frame update
         public enum StateTNT
@@ -37,6 +37,7 @@ namespace TNT_Run
         {
 
             isMortal = false;
+            aviable = true;
             //Debug.Log(stateTNT.ToString());
         }
 
@@ -45,6 +46,10 @@ namespace TNT_Run
             CheckAnimation();
             if(enableUpdate)
             CheckCollisionPlayer(distanceCollision);
+            if (stateTNT == StateTNT.Normal && !aviable)
+            {
+                aviable = true;
+            }
         }
         // Update is called once per frame
 
@@ -66,6 +71,7 @@ namespace TNT_Run
         {
             stateTNT = StateTNT.Empty;
             isMortal = true;
+            aviable = false;
         }
         void FindPlayer()
         {

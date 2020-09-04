@@ -55,7 +55,7 @@ namespace TNT_Floor
         public void AddPoint(InventoryPlayer inventoryPlayer)
         {
             if (inventoryPlayer == null) return;
-            Debug.Log(inventoryPlayer.currentCoin);
+            //Debug.Log(inventoryPlayer.currentCoin);
             if (inventoryPlayer.currentCoin >= neededPointsForFinishLevel)
             {
                 neededPoints = true;

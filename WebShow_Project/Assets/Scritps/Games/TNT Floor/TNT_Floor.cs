@@ -5,9 +5,8 @@ using UnityEngine;
 namespace TNT_Floor
 {
     using Players;
-    public class TNT_Floor : MonoBehaviour
+    public class TNT_Floor : IEAviableObject
     {
-        // Start is called before the first frame update
         public float distanceCollision;
         public float delayDetonate;
         public float secondInDelayDetonate;
@@ -47,6 +46,7 @@ namespace TNT_Floor
 
         void Start()
         {
+            aviable = true;
             auxDelayDetonate = delayDetonate;
             auxDelayActivatedMeForCollision = delayActivatedMeForCollision;
         }
@@ -59,6 +59,10 @@ namespace TNT_Floor
             {
                 CheckDelayDetonate();
                 CheckCollisionPlayer(distanceCollision);
+            }
+            if (stateTNT == StateTNT.Normal && !aviable)
+            {
+                aviable = true;
             }
             //if (activateDebug)
             //Debug.Log(stateTNT);
@@ -111,6 +115,7 @@ namespace TNT_Floor
                 stateTNT = StateTNT.Empty;
                 isMortal = true;
                 DisabledEnableDelayDetonated();
+                aviable = false;
             }
         }
         public void ActivatedDelayDetonate()

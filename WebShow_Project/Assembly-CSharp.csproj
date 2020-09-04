@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scritps\Games\TNT Floor\UI_Manager.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Run\GameManager.cs" />
     <Compile Include="Assets\Scritps\Games\TNT Run\TNT_Run.cs" />
+    <Compile Include="Assets\Scritps\IEAviableObject.cs" />
     <Compile Include="Assets\Scritps\Pool\Pool.cs" />
     <Compile Include="Assets\Scritps\Pool\PoolObject.cs" />
     <Compile Include="Assets\Scritps\SelfDestructible.cs" />

@@ -15,6 +15,15 @@ public class CoinsGenerator : MonoBehaviour
     public bool enableSubstractDelay = true;
     public float delaySubstractDelay = 0.2f;
     private float auxDelaySubstractDelay;
+    public int countTriedGeneration = 10;
+    private int auxCountTriedGeneration;
+    public enum TypeGeneration
+    {
+        RandomPosition,
+        RandomTransformList,
+    }
+    public TypeGeneration typeGeneration;
+    public List<IEAviableObject> listPosition;
 
     public float minValueMinDelayGeneration = 1;
     public float minValueMaxDelayGeneration = 3;
@@ -26,6 +35,7 @@ public class CoinsGenerator : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
+        auxCountTriedGeneration = countTriedGeneration;
         auxDelaySubstractDelay = delaySubstractDelay;
         if (startGeneration)
         {
@@ -87,12 +97,64 @@ public class CoinsGenerator : MonoBehaviour
     }
     void GenerationCoin()
     {
-        float x = Random.Range(minRandX, maxRandX);
-        float y = Random.Range(minRandY, maxRandY);
+        float x = -1;
+        float y = -1;
+        
+        GameObject go = null;
+        switch (typeGeneration) {
+            case TypeGeneration.RandomPosition:
+                x = Random.Range(minRandX, maxRandX);
+                y = Random.Range(minRandY, maxRandY);
 
-        GameObject go = poolCoin.GetObject();
-        if (go == null) return;
-        go.transform.position = new Vector3(x, y, 0);
+                go = poolCoin.GetObject();
+                if (go == null) return;
+                go.transform.position = new Vector3(x, y, 0);
+                break;
+            case TypeGeneration.RandomTransformList:
+                bool generationDone = false;
+                int indexRandom = Random.Range(0, listPosition.Count);
+                while (countTriedGeneration > 0 && !generationDone)
+                {
+                    if (listPosition[indexRandom] != null)
+                    {
+                        if (listPosition[indexRandom].aviable)
+                        {
+                            go = poolCoin.GetObject();
+                            x = listPosition[indexRandom].transform.position.x;
+                            y = listPosition[indexRandom].transform.position.y;
+                            if (go == null) return;
+                            go.transform.position = new Vector3(x, y, 0);
+                            generationDone = true;
+                        }
+                    }
+                    countTriedGeneration--;
+                }
+                if (!generationDone)
+                {
+                    for (int i = 0; i < listPosition.Count; i++)
+                    {
+                        if (listPosition[i] != null)
+                        {
+                            if (listPosition[i].aviable)
+                            {
+                                go = poolCoin.GetObject();
+                                x = listPosition[i].transform.position.x;
+                                y = listPosition[i].transform.position.y;
+                                if (go == null) return;
+                                go.transform.position = new Vector3(x, y, 0);
+                                generationDone = true;
+                                i = listPosition.Count;
+                            }
+                        }
+                    }
+                }
+                if (!generationDone)
+                {
+                    enableGeneration = false;
+                }
+                countTriedGeneration = auxCountTriedGeneration;
+                break;
+        }
     }
 
 }
